@@ -2,3 +2,37 @@
 title: "Update System"
 description: "Instalasi Debian 12"
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+After it has been a production System, maybe it's difficult to update System, but at least after installing, Update Debian Server to the latest.
+
+<Steps>
+1.  Update your Debian Server.
+    ```markdown
+    # update lists first
+
+    root@localhost:~# apt update
+    Hit:1 http://security.debian.org/debian-security bookworm-security InRelease
+    Hit:2 http://deb.debian.org/debian bookworm InRelease
+    Hit:3 http://deb.debian.org/debian bookworm-updates InRelease
+    Hit:4 http://deb.debian.org/debian bookworm-backports InRelease
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    All packages are up to date.
+
+    # update System
+
+    root@localhost:~# apt -y upgrade
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    Calculating upgrade... Done
+    The following packages will be upgraded:
+    .....
+    .....
+    .....
+    ```
+
+</Steps>

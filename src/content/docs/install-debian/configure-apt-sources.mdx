@@ -2,3 +2,56 @@
 title: "Configure APT Sources"
 description: "Instalasi Debian 12"
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Configure APT Sources that are used when running `apt` command.
+
+<Steps>
+1.  If you installed Debian from DVD media, DVD was set as main source, however if it's not necessary anymore, change APT source settings.
+    ```markdown
+    root@localhost:~# vi /etc/apt/sources.list
+
+    # comment out DVD source and add network source
+
+    #deb cdrom:[Debian GNU/Linux 11.0.0 Bullseye - Official amd64 DVD Binary-1 20210814-10:04]/ bullseye contrib main
+
+    deb http://deb.debian.org/debian/ bookworm main non-free-firmware
+
+    # if comment outed
+    # uncomment it to enable [security] source
+
+    deb http://security.debian.org/debian-security bookworm-security main non-free-firmware
+
+    # if comment outed
+    # uncomment it to enable [updates] source
+
+    deb http://deb.debian.org/debian/ bookworm-updates main non-free-firmware
+    ```
+
+2.  Add Backports source.
+    ⇒ https://backports.debian.org/Instructions/
+
+    ```markdown
+    root@localhost:~# vi /etc/apt/sources.list
+
+    # add to the end
+
+    deb http://deb.debian.org/debian/ bookworm-backports main non-free-firmware
+    ```
+
+3.  After changing APT source settings, update source lists.
+    ```markdown
+    root@localhost:~# apt update
+    Hit:1 http://deb.debian.org/debian bookworm InRelease
+    Hit:2 http://deb.debian.org/debian bookworm-updates InRelease
+    Hit:3 http://security.debian.org/debian-security bookworm-security InRelease
+    Get:4 http://deb.debian.org/debian bookworm-backports InRelease [49.7 kB]
+    Fetched 49.7 kB in 0s (101 kB/s)
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    All packages are up to date.
+    ```
+
+</Steps>

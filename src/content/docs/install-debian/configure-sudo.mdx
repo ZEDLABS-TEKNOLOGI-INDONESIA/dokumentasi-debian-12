@@ -2,3 +2,162 @@
 title: "Configure Sudo"
 description: "Instalasi Debian 12"
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Configure Sudo to separate users' duty if some people share privileges.
+
+<Steps>
+1.  Install Sudo.
+    ```markdown
+    root@localhost:~# apt -y install sudo
+    ```
+
+2.  Transfer root privilege to a user all.
+
+    ```markdown
+    root@localhost:~# visudo
+
+    # add to the end : user [bookworm] can use all root privilege
+
+    # how to write ⇒ destination host=(owner) command
+
+    bookworm ALL=(ALL:ALL) ALL
+
+    # push [Ctrl + x] key to quit visudo
+
+    # verify with user [bookworm]
+
+    bookworm@localhost:~$ cat /etc/shadow
+
+    cat: /etc/shadow: Permission denied
+
+    # denied
+
+    bookworm@localhost:~$ sudo cat /etc/shadow
+
+    [sudo] password for bookworm: # bookworm's password
+    root:xxxxxxxxxx:19520:0:99999:7:::
+    daemon:_:19520:0:99999:7:::
+    bin:_:19520:0:99999:7:::
+    sys:_:19520:0:99999:7:::
+    sync:_:19520:0:99999:7:::
+    .....
+    .....
+
+    # possible executed
+    ```
+
+3.  In addition to the setting \[1\], set that some commands are not allowed.
+
+    ```markdown
+    root@localhost:~# visudo
+
+    # add alias for the kind of shutdown commands
+
+    # Cmnd alias specification
+
+    Cmnd_Alias SHUTDOWN = /usr/sbin/halt, /usr/sbin/shutdown, \
+    /usr/sbin/poweroff, /usr/sbin/reboot, /usr/sbin/init, /usr/bin/systemctl
+
+    # add ( commands in alias [SHUTDOWN] are not allowed )
+
+    bookworm ALL=(ALL:ALL) ALL, !SHUTDOWN
+
+    # verify with user [bookworm]
+
+    bookworm@localhost:~$ sudo /usr/sbin/reboot
+
+    [sudo] password for bookworm:
+    Sorry, user bookworm is not allowed to execute '/usr/sbin/reboot' as root on localhost.
+
+    # denied as setting
+    ```
+
+4.  Transfer some commands with root privilege to users in a group.
+
+    ```markdown
+    root@localhost:~# visudo
+
+    # add alias for the kind of user management commands
+
+    # Cmnd alias specification
+
+    Cmnd_Alias USERMGR = /usr/sbin/adduser, /usr/sbin/useradd, /usr/sbin/newusers, \
+    /usr/sbin/deluser, /usr/sbin/userdel, /usr/sbin/usermod, /usr/bin/passwd
+
+    # add to the end
+
+    %usermgr ALL=(ALL:ALL) USERMGR
+
+    root@localhost:~# groupadd usermgr
+
+    root@localhost:~# usermod -aG usermgr bookworm
+
+    # verify with user [bookworm]
+
+    bookworm@localhost:~$ sudo /usr/sbin/useradd testuser
+
+    bookworm@localhost:~$
+    bookworm@localhost:~$ sudo /usr/bin/passwd testuser
+
+    Enter new UNIX password:
+    Retype new UNIX password:
+    passwd: password updated successfully
+
+    # possible execute
+    ```
+
+5.  Transfer some specific commands with root privilege to a user.
+
+    ```markdown
+    root@localhost:~# visudo
+
+    # add to the end : set specific commands to each user
+
+    fedora ALL=(ALL:ALL) /usr/sbin/visudo
+    debian ALL=(ALL:ALL) /usr/sbin/adduser, /usr/sbin/useradd, /usr/sbin/newusers, \
+    /usr/sbin/deluser, /usr/sbin/userdel, /usr/sbin/usermod, /usr/bin/passwd
+    ubuntu ALL=(ALL:ALL) /usr/bin/vim
+
+    # verify with user [fedora]
+
+    fedora@localhost:~$ sudo /usr/sbin/visudo
+
+    # possible open and edit
+
+    ## Sudoers allows particular users to run various commands as
+
+    ## the root user, without needing the root password.
+
+    ##
+
+    # verify with user [debian]
+
+    debian@localhost:~$ sudo /usr/sbin/userdel -r testuser
+
+    debian@localhost:~$ # possible execute
+
+    # verify with user [ubuntu]
+
+    ubuntu@localhost:~$ sudo /usr/bin/vim /root/.profile
+
+    # possible open and edit
+
+    # ~/.profile: executed by Bourne-compatible login shells.
+    ```
+
+6.  It's possible to display Sudo logs on Journald like follows.
+
+    ```markdown
+    root@localhost:~# journalctl -t sudo
+
+    Jun 14 00:03:05 debian sudo[1656]: bookworm : TTY=ttyS0 ; PWD=/home/bookworm ; USER=root ; COMMAND=/usr/bin/cat /etc/shadow
+    Jun 14 00:03:05 debian sudo[1656]: pam_unix(sudo:session): session opened for user root(uid=0) by root(uid=1001)
+    Jun 14 00:03:05 debian sudo[1656]: pam_unix(sudo:session): session closed for user root
+    Jun 14 00:09:41 debian sudo[1687]: bookworm : TTY=ttyS0 ; PWD=/home/bookworm ; USER=root ; COMMAND=/usr/bin/ls -l /root
+    Jun 14 00:09:41 debian sudo[1687]: pam_unix(sudo:session): session opened for user root(uid=0) by root(uid=1001)
+    Jun 14 00:09:41 debian sudo[1687]: pam_unix(sudo:session): session closed for user root
+    ```
+
+</Steps>
