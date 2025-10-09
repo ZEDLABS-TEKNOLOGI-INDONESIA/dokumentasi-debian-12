@@ -1,0 +1,86 @@
+---
+title: Menggunakan komponen
+description: Using components in MDX and Markdoc with Starlight.
+sidebar:
+  order: 1
+---
+
+Komponen memungkinkan Anda dengan mudah menggunakan kembali sepotong UI atau styling secara konsisten. Contoh mungkin termasuk kartu link atau embed YouTube. Starlight mendukung penggunaan komponen dalam file [MDX](https://mdxjs.com/) dan [Markdoc](https://markdoc.dev/) dan menyediakan beberapa komponen umum untuk Anda gunakan.
+
+[Pelajari lebih lanjut tentang komponen bangunan di Astro Docs.](https://docs.astro.build/en/basics/astro-components/).
+
+## Menggunakan komponen di MDX
+
+Anda dapat menggunakan komponen dengan mengimpornya ke dalam file MDX Anda dan kemudian menjadikannya sebagai tag JSX. Ini terlihat seperti tag HTML tetapi mulai dengan huruf besar yang cocok dengan nama di Anda `import` pernyataan:
+
+```mdx
+---
+# src/content/docs/example.mdx
+title: Welcome to my docs
+---
+
+import { Icon } from "@astrojs/starlight/components";
+import CustomCard from "../../components/CustomCard.astro";
+
+<Icon name="open-book" />
+
+<CustomCard>Components can also contain **nested content**.</CustomCard>
+```
+
+Karena Starlight didukung oleh Astro, Anda dapat menambahkan dukungan untuk komponen yang dibangun dengan [kerangka kerja UI yang didukung (React, Preact, Svelte, Vue, Solid, dan Alpine)](https://docs.astro.build/en/guides/framework-components/) dalam file MDX Anda. Pelajari lebih lanjut tentang [menggunakan komponen di MDX](https://docs.astro.build/en/guides/integrations-guide/mdx/#using-components-in-mdx) di Astro Docs.
+
+## Menggunakan komponen di Markdoc
+
+Tambahkan dukungan untuk konten authoring di Markdoc dengan mengikuti [panduan pengaturan Markdoc](https://starlight.astro.build/guides/authoring-content/#markdoc) kami.
+
+Dengan menggunakan preset Starlight Markdoc, Anda dapat menggunakan komponen built-in Starlight dengan Markdoc. `{% %}` tag sintaks.
+Tidak seperti MDX, komponen di Markdoc tidak perlu diimpor. Contoh berikut membuat [komponen kartu](https://starlight.astro.build/components/cards/) Starlight dalam file Markdoc:
+
+```markdoc
+---
+# src/content/docs/example.mdoc
+title: Welcome to my docs
+---
+
+{% card title="Stars" icon="star" %}
+Sirius, Vega, Betelgeuse
+{% /card %}
+```
+
+Lihat [dokumentasi integrasi Astro Markdoc](https://docs.astro.build/en/guides/integrations-guide/markdoc/#render-components) untuk informasi lebih lanjut tentang cara menggunakan komponen dalam file Markdoc.
+
+## Komponen built-in
+
+Starlight menyediakan komponen built-in untuk kasus penggunaan dokumentasi umum. komponen-komponen ini tersedia dari `@astrojs/starlight/components` paket dalam file MDX dan dari [awal Starlight Markdoc](https://starlight.astro.build/guides/authoring-content/#markdoc) dalam file Markdoc.
+
+Lihat sidebar untuk daftar komponen yang tersedia dan cara menggunakannya.
+
+## Kompatibilitas dengan gaya Starlight
+
+Starlight menerapkan styling default ke konten Markdown Anda, misalnya, menambahkan margin antara elemen. Jika gaya ini bertentangan dengan penampilan komponen Anda, atur `not-content` kelas pada komponen Anda untuk menonaktifkan mereka.
+
+```astro 'class="not-content"'
+---
+// src/components/Example.astro
+---
+
+<div class="not-content">
+	<p>Not impacted by Starlight’s default content styling.</p>
+</div>
+```
+
+## Alat peraga komponen
+
+Gunakan [ComponentProps](https://docs.astro.build/en/guides/typescript/#componentprops-type) ketik dari `astro/types` untuk referensi `Props` diterima oleh komponen bahkan jika mereka tidak diekspor oleh komponen itu sendiri. Hal ini dapat membantu ketika membungkus atau memperpanjang komponen yang ada.
+
+Contoh berikut menggunakan `ComponentProps` untuk mendapatkan jenis alat peraga yang diterima oleh Starlight built-in `Badge` komponen:
+
+```astro
+---
+// src/components/Example.astro
+import type { ComponentProps } from 'astro/types';
+import { Badge } from '@astrojs/starlight/components';
+
+type BadgeProps = ComponentProps<typeof Badge>;
+---
+```
