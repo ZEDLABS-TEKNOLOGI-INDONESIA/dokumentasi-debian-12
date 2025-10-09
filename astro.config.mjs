@@ -27,10 +27,10 @@ export default defineConfig({
           label: "Instalasi",
           autogenerate: { directory: "install" },
         },
-        {
-          label: "Components",
-          autogenerate: { directory: "components" },
-        },
+        // {
+        //   label: "Components",
+        //   autogenerate: { directory: "components" },
+        // },
       ],
       customCss: ["./src/styles/global.css"],
     }),
