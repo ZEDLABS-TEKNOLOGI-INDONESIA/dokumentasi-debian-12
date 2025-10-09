@@ -2,3 +2,105 @@
 title: "Install Debian 12"
 description: "Instalasi Debian 12"
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+### Install
+
+<Steps>
+
+1. Insert a disk for installation of Debian bookworm and reboot your computer.
+   On the following screen, Enter with `Graphical install`.
+   ![](https://www.server-world.info/en/Debian_12/install/img/1.png)
+
+2. Select the language which is used during the Installation.
+   ![](https://www.server-world.info/en/Debian_12/install/img/2.png)
+
+3. Select your country for System TimeZone setting.
+   ![](https://www.server-world.info/en/Debian_12/install/img/3.png)
+
+4. Select the keyboard layout you are using now.
+   ![](https://www.server-world.info/en/Debian_12/install/img/4.png)
+
+5. Set your server's hostname you'd like to set.
+   ![](https://www.server-world.info/en/Debian_12/install/img/5.png)
+
+6. Input your Network Domain name.
+   ![](https://www.server-world.info/en/Debian_12/install/img/6.png)
+
+7. Set root account's password.
+   ![](https://www.server-world.info/en/Debian_12/install/img/7.png)
+
+8. Set a common user account. (full-name for display)
+   ![](https://www.server-world.info/en/Debian_12/install/img/8.png)
+
+9. Input a user name used on the system.
+   ![](https://www.server-world.info/en/Debian_12/install/img/9.png)
+
+10. Set password for a user added in pre-section.
+    ![](https://www.server-world.info/en/Debian_12/install/img/10.png)
+
+11. Select your TimeZone area.
+    ![](https://www.server-world.info/en/Debian_12/install/img/11.png)
+
+12. This is the section for configuring partition. On this example, it selects `Guided with LVM` like follows.
+    ![](https://www.server-world.info/en/Debian_12/install/img/12.png)
+
+13. Select a disk to create partitions for Debian System.
+    ![](https://www.server-world.info/en/Debian_12/install/img/13.png)
+
+14. Select a type of partition layout you'd like to set.
+    ![](https://www.server-world.info/en/Debian_12/install/img/14.png)
+
+15. It's the confirmation for configuring partition. If that's OK, answer `Yes`.
+    ![](https://www.server-world.info/en/Debian_12/install/img/15.png)
+
+16. If you selected LVM setup in pre-section, specify the size of Volume Group. (default is Max size of Disk)
+    ![](https://www.server-world.info/en/Debian_12/install/img/16.png)
+
+17. It's the final confirmation for changing Disk. If that's OK, answer `Yes`.
+    ![](https://www.server-world.info/en/Debian_12/install/img/17.png)
+
+18. After installing Base System, following screen is shown. If you'd like to install more packages from another CD/DVD, answer `Yes`.
+    ![](https://www.server-world.info/en/Debian_12/install/img/18.png)
+
+19. If you'd like to set a network mirror site for Debian Repositories, answer `Yes`.
+    ![](https://www.server-world.info/en/Debian_12/install/img/19.png)
+
+20. Answer
+    `Yes` to participate package usage survey as an anonymous.
+    ![](https://www.server-world.info/en/Debian_12/install/img/20.png)
+
+21. Select software groups to install. On this example, it selects only `Standard system utilties` like follows.
+    ![](https://www.server-world.info/en/Debian_12/install/img/21.png)
+
+22. GRUB Boot Loader is installed on local disk, if that's OK, select `Yes`. Generally it's OK with `Yes` on here unless your computer has been configured as the multiple OS boot setting.
+    ![](https://www.server-world.info/en/Debian_12/install/img/22.png)
+
+23. Select a Disk to install GRUB bootloader.
+    ![](https://www.server-world.info/en/Debian_12/install/img/23.png)
+
+24. Installation finished. Remove the DVD media and `Continue`, then system will
+    restart. ![](https://www.server-world.info/en/Debian_12/install/img/24.png)
+
+25. After Debian Server has been restarted, login prompt is shown, Login as a
+    user you set during the Installation, or root user account. If logined
+    normally, Your Debian Server Installation has completed.
+
+</Steps>
+
+```bash
+Debian GNU/Linux 12 debian ttyS0
+
+debian login: debian
+Password:
+Linux debian 6.1.0-9-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.27-1 (2023-05-08) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/\*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+debian@debian:~$
+```
