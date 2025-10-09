@@ -2,3 +2,48 @@
 title: "Set Command Alias"
 description: "Instalasi Debian 12"
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Set Command Alias for some commands that are often used.
+
+<Steps>
+
+1.  Apply to all users as defaults.
+
+    ```markdown
+    root@localhost:~# vi /etc/profile.d/command_alias.sh
+
+    # create new file
+
+    # add alias you'd like to set
+
+    alias ll='ls $LS_OPTIONS -l'  
+    alias l='ls $LS_OPTIONS -lA'  
+    alias rm='rm -i'  
+    alias cp='cp -i'  
+    alias mv='mv -i'
+
+    # reload
+
+    root@localhost:~# source /etc/profile.d/command_alias.sh
+    ```
+
+2.  Apply to a user.
+    For example, a user \[bookworm\] applies alias for itself.
+
+    ```markdown
+    bookworm@localhost:~$ vi ~/.bashrc
+
+    # add to the end : add alias you'd like to set
+
+    alias ll='ls $LS_OPTIONS -l'  
+    alias l='ls $LS_OPTIONS -lA'  
+    alias rm='rm -i'  
+    alias cp='cp -i'  
+    alias mv='mv -i'
+
+    bookworm@localhost:~$ source ~/.bashrc
+    ```
+
+</Steps>

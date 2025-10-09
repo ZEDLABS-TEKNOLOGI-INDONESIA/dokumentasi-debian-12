@@ -2,3 +2,61 @@
 title: "Add User Accounts"
 description: "Instalasi Debian 12"
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+If you'd like to add new user accounts, configure like follows.
+
+<Steps>
+
+1.  For example, Add a [bookworm] user.
+
+    ```markdown
+    root@localhost:~# adduser bookworm
+    Adding user 'bookworm' ...
+    Adding new group 'bookworm' (1001) ...
+    Adding new user 'bookworm' (1001) with group 'bookworm' ...
+    Creating home directory '/home/bookworm' ...
+    Copying files from '/etc/skel' ...
+    New password: # set user password
+    Retype new password: # confirm
+    passwd: password updated successfully
+    Changing the user information for bookworm
+    Enter the new value, or press ENTER for the default
+
+        Full Name []: # input user info (OK with empty all if you do not need)
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+
+    Is the information correct? [Y/n] y
+
+    root@localhost:~#
+    ```
+
+2.  If you'd like to limit users to switch to root user account, configure like follows.
+    For example, Configure that only [bookworm] user can switch to root account with [su] command.
+
+    ```markdown
+    root@localhost:~# usermod -aG adm bookworm
+    root@localhost:~# vi /etc/pam.d/su
+
+    # line 15 : uncomment and add the group
+
+    auth required pam_wheel.so group=adm
+    ```
+
+3.  If you'd like to remove user accounts, configure like follows.
+
+    ```markdown
+    # remove a user [bookworm] (only removed user account)
+
+    root@localhost:~# deluser bookworm
+
+    # remove a user [bookworm] (removed user account and his home directory)
+
+    root@localhost:~# deluser bookworm --remove-home
+    ```
+
+</Steps>
