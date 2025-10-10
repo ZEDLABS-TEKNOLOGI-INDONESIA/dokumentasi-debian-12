@@ -20,11 +20,11 @@ export default defineConfig({
       sidebar: [
         {
           label: "Install Debian", // Tema Pembahasan
-          collapsed: true,
+          // collapsed: true,
           items: [
             {
               label: "Install", // Kategori
-              collapsed: true,
+              // collapsed: true,
               items: [
                 {
                   label: "Get Debian 12",
@@ -38,7 +38,7 @@ export default defineConfig({
             },
             {
               label: "Initial Settings", // Kategori
-              collapsed: true,
+              // collapsed: true,
               items: [
                 {
                   label: "Add User Accounts",
@@ -78,11 +78,11 @@ export default defineConfig({
         },
         {
           label: "NTP / SSH Server", // Tema Pembahasan
-          collapsed: true,
+          // collapsed: true,
           items: [
             {
               label: "NTP Server", // Kategori
-              collapsed: true,
+              // collapsed: true,
               items: [
                 {
                   label: "Configure NTP Server (NTPsec)",
@@ -100,7 +100,7 @@ export default defineConfig({
             },
             {
               label: "SSH Server", // Kategori
-              collapsed: true,
+              // collapsed: true,
               items: [
                 {
                   label: "Password Authentication",
