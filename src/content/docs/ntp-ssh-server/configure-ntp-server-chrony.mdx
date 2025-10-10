@@ -2,3 +2,30 @@
 title: "Configure NTP Server (Chrony)"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Install Chrony and Configure NTP server for time adjustment. NTP uses 123/UDP.
+
+<Steps>
+1. Install and Configure Chrony.
+    ```markdown
+    root@dlp:~# apt -y install chrony
+    root@dlp:~# vi /etc/chrony/chrony.conf
+    # line 8 : comment out default settings and add NTP Servers for your timezone
+    #pool 2.debian.pool.ntp.org iburst
+    pool ntp.nict.jp iburst
+    # add to the end : network range you allow to receive time syncing requests from clients
+    allow 10.0.0.0/24
+    root@dlp:~# systemctl restart chrony
+    # verify status
+    root@dlp:~# chronyc sources
+    MS Name/IP address Stratum Poll Reach LastRx Last sample
+    ===============================================================================
+    ^- ntp-a3.nict.go.jp 1 6 17 1 +582us[ +582us] +/- 9081us
+    ^- ntp-b2.nict.go.jp 1 6 17 1 -1423us[-1423us] +/- 10ms
+    ^- ntp-b3.nict.go.jp 1 6 17 1 +4168us[+4168us] +/- 16ms
+    ^* ntp-a2.nict.go.jp 1 6 17 2 -298us[ -38us] +/- 9409us
+    ```
+
+</Steps>

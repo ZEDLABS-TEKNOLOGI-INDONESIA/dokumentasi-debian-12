@@ -2,3 +2,58 @@
 title: "Use SSH-Pass"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+Use SSHPass to automate inputting password on password authentication.
+
+This is convenient but it has security risks (leak of password), take special care if you use it.
+
+\[1\]
+
+Install SSHPass.
+
+```markdown
+root@dlp:~#
+
+[apt](https://www.server-world.info/en/note?p=command&q=apt) -y install sshpass
+
+\[2\]
+
+How to use SSHPass.
+
+\# \[-p password\] : from argument  
+\# if initial connection, add \[StrictHostKeyChecking=no\]
+
+debian@dlp:~$
+
+sshpass -p password ssh -o StrictHostKeyChecking=no 10.0.0.51 hostname
+
+node01.srv.world
+
+\# \[-f file\] : from file
+
+debian@dlp:~$
+
+[echo](https://www.server-world.info/en/note?p=command&q=echo) 'password' > sshpass.txt
+
+debian@dlp:~$
+
+[chmod](https://www.server-world.info/en/note?p=command&q=chmod) 600 sshpass.txt
+
+debian@dlp:~$
+
+sshpass -f sshpass.txt ssh 10.0.0.51 hostname
+
+node01.srv.world
+
+\# \[-e\] : from environment variable
+
+debian@dlp:~$
+
+export SSHPASS=password
+
+debian@dlp:~$
+
+sshpass -e ssh 10.0.0.51 hostname
+
+node01.srv.world
+```

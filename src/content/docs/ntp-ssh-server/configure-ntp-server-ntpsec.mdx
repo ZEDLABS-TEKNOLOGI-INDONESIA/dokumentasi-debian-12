@@ -2,3 +2,48 @@
 title: "Configure NTP Server (NTPsec)"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Install NTPsec and Configure NTP server for time adjustment. NTP uses 123/UDP.
+
+<Steps>
+
+1. Install and Configure NTPsec.
+
+   ```markdown
+   root@dlp:~# apt -y install ntpsec
+   root@dlp:~# vi /etc/ntpsec/ntp.conf
+
+   # line 24 : if you use your own NTP servers only and also
+
+   # pool entries are a few, change number of value below or comment out the line
+
+   #tos minclock 4 minsane 3
+
+   # line 34 : comment out default settings and add NTP Servers for your timezone
+
+   #pool 0.debian.pool.ntp.org iburst
+   #pool 1.debian.pool.ntp.org iburst
+   #pool 2.debian.pool.ntp.org iburst
+   #pool 3.debian.pool.ntp.org iburst
+   pool ntp.nict.jp iburst
+   root@dlp:~# systemctl restart ntpsec
+
+   # verify status
+
+   root@dlp:~# ntpq -p
+   remote refid st t when poll reach delay offset jitter
+   ===============================================================================
+   ntp.nict.jp .POOL. 16 p - 256 0 0.0000 0.0000 0.0001
+   +ntp-b3.nict.go. .NICT. 1 u 17 64 1 29.8311 0.8136 3.1750
+   +ntp-a3.nict.go. .NICT. 1 u 17 64 1 28.0380 -1.0282 3.2487
+   +ntp-b2.nict.go. .NICT. 1 u 17 64 1 30.1922 0.7200 3.1391
+   +ntp-k1.nict.jp .NICT. 1 u 17 64 1 27.4731 -0.7621 3.2226
+   \*ntp-a2.nict.go. .NICT. 1 u 17 64 1 26.9883 -0.6428 3.3839
+   2001:ce8:78::2 .INIT. 16 u - 64 0 0.0000 0.0000 0.0001
+   ntp-a2.nict.go. .INIT. 16 u - 64 0 0.0000 0.0000 0.0001
+   ntp-a3.nict.go. .INIT. 16 u - 64 0 0.0000 0.0000 0.0001
+   ```
+
+</Steps>

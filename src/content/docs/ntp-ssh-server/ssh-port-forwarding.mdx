@@ -2,3 +2,39 @@
 title: "SSH Port Forwarding"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+It's possible to forward a port to another port with SSH port forwarding.
+
+\[1\]
+
+For example, set SSH Port Forwarding that requests to port \[8081\] on \[dlp.srv.world (10.0.0.30)\] are forwarded to port \[80\] on \[node01.srv.world (10.0.0.51)\].
+
+\# SSH login from source host to target host
+
+debian@dlp:~$
+
+ssh -L 10.0.0.30:8081:10.0.0.51:80 debian@node01.srv.world
+
+debian@node01.srv.world's password:
+
+\# password of the user
+
+debian@node01:~$
+
+\# confirm
+
+debian@node01:~$
+
+ssh dlp.srv.world "ss -napt | grep 8081"
+
+debian@dlp.srv.world's password:
+LISTEN 0 128 10.0.0.30:8081 0.0.0.0:\* users:(("ssh",pid=5415,fd=4))
+
+\# listen on 8081  
+\# keep this login session
+
+\[2\]
+
+Verify to access to a port on source Host you set from any client Host, then target port on target Host replies.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/13.png)

@@ -2,3 +2,55 @@
 title: "Use SSH-Agent"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+Use SSH-Agent to automate inputting passphrase on key-pair authentication.  
+Using SSH-Agent is valid for users who set SSH Key Pair with Passphrase.
+
+\[1\]
+
+[It's necessarry to set key-pair with Passphrase first](https://www.server-world.info/en/note?os=Debian_12&p=ssh&f=4).
+
+\[2\]
+
+This is how to use SSH-Agent.
+
+\# start SSH-Agent
+
+debian@node01:~$
+
+eval $(ssh-agent)
+
+Agent pid 551
+
+\# add Identity
+
+debian@node01:~$
+
+ssh-add
+
+Enter passphrase for /home/debian/.ssh/id_rsa:  
+Identity added: /home/debian/.ssh/id_rsa (debian@dlp.srv.world)
+
+\# confirm
+
+debian@node01:~$
+
+ssh-add -l
+
+3072 SHA256:0906O21b6CZoQseEYDbM3QYKa2kkqfmRYTnIOFZmBTI debian@dlp.srv.world (RSA)
+
+\# try to connect with SSH without passphrase
+
+debian@node01:~$
+
+ssh dlp.srv.world hostname
+
+dlp.srv.world
+
+\# exit from SSH-Agent
+
+debian@node01:~$
+
+eval $(ssh-agent -k)
+
+Agent pid 551 killed

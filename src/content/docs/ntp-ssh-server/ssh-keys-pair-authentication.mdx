@@ -2,3 +2,151 @@
 title: "SSH Keys Pair Authentication"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+Configure SSH server to login with Key-Pair Authentication.  
+Create a private key for client and a public key for server to do it.
+
+\[1\]
+
+Create Key-Pair by each user, so login with a common user on SSH Server Host and work like follows.
+
+\# create key-pair
+
+debian@dlp:~$
+
+ssh-keygen
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/debian/.ssh/id_rsa): \# Enter or input changes if you want
+Created directory '/home/debian/.ssh'.
+Enter passphrase (empty for no passphrase): \# set passphrase (if set no passphrase, Enter with empty)
+Enter same passphrase again:
+Your identification has been saved in /home/debian/.ssh/id_rsa
+Your public key has been saved in /home/debian/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:0906O21b6CZoQseEYDbM3QYKa2kkqfmRYTnIOFZmBTI debian@dlp.srv.world
+The key's randomart image is:
+.....
+.....
+
+debian@dlp:~$
+
+[ll](https://www.server-world.info/en/note?p=command&q=ls) ~/.ssh
+
+total 8
+-rw------- 1 debian debian 2655 Jun 14 03:28 id_rsa
+-rw-r--r-- 1 debian debian 574 Jun 14 03:28 id_rsa.pub
+
+debian@dlp:~$
+
+[mv](https://www.server-world.info/en/note?p=command&q=mv) ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+
+\[2\]
+
+Transfer the private key created on the Server to a Client, then it's possible to login with Key-Pair authentication.
+
+debian@node01:~$
+
+[mkdir](https://www.server-world.info/en/note?p=command&q=mkdir) ~/.ssh
+
+debian@node01:~$
+
+[chmod](https://www.server-world.info/en/note?p=command&q=chmod) 700 ~/.ssh
+
+\# transfer the private key to the local ssh directory
+
+debian@node01:~$
+
+scp debian@10.0.0.30:/home/debian/.ssh/id_rsa ~/.ssh/
+
+debian@10.0.0.30's password:
+id_rsa 100% 2655 2.6MB/s 00:00
+
+debian@node01:~$
+
+ssh debian@10.0.0.30
+
+Enter passphrase for key '/home/debian/.ssh/id_rsa': \# passphrase if you set
+Linux dlp.srv.world 6.1.0-9-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.27-1 (2023-05-08) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/\*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+debian@dlp:~$     \# logined
+
+\[3\]
+
+If you set \[PasswordAuthentication no\], it's more secure.
+
+root@dlp:~#
+
+[vi](https://www.server-world.info/en/note?p=command&q=vi) /etc/ssh/sshd_config
+
+\# line 57 : change to \[no\]
+
+PasswordAuthentication
+
+no
+
+\# line 62 : confirm the value is \[no\]
+
+KbdInteractiveAuthentication no
+
+root@dlp:~#
+
+[systemctl](https://www.server-world.info/en/note?p=command&q=systemctl) restart ssh
+
+SSH Key-Pair Authentication on Windows Client #1
+
+This is the example to login to SSH server from Windows Client.  
+On this example, it shows with [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/).  
+Before it, [Transfer a private key to Windows client computer](https://www.server-world.info/en/note?os=Debian_12&p=ssh&f=3).
+
+\[4\]
+
+Run \[Puttygen.exe\] that is included in \[Putty\]. (placed in the folder \[Putty.exe\] is also placed)  
+If not included, Download it from official site (www.chiark.greenend.org.uk/~sgtatham/putty/).  
+After starting \[Puttygen.exe\], Click \[Load\] button on the following window.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/6.png)
+
+\[5\]
+
+Specify the private key that you transferred from SSH server, then passphrase is required like follows, answer it. (if not set passphrase, this step is skipped)
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/7.png)
+
+\[6\]
+
+Click \[Save private key\] button to save it under a folder you like with any file name you like.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/8.png)
+
+\[7\]
+
+Start Putty and Open \[Connection\] - \[SSH\] - \[Auth\] - \[Credencial\] on the left pane, then specify your private key on the \[Private key file\] field.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/9.png)
+
+\[8\]
+
+Back to the \[Session\] on the left pane and specify your SSH server host to Connect.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/10.png)
+
+\[9\]
+
+When SSH key-pair is set, the passphrase if it is set is required to login like follows, then answer it.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/11.png)
+
+SSH Key-Pair Authentication on Windows #2
+
+\[10\]
+
+OpenSSH Client has been implemented as an Windows feature, so it's possible to authenticate with SSH Key-Pair without Putty and other 3rd party softwares. Transfer your private key to your Windows and put it under the \[(logon user home).ssh\] folder like follows, then it's ready to use Key-Pair authentication.
+
+![](https://www.server-world.info/en/Debian_12/ssh/img/12.png)

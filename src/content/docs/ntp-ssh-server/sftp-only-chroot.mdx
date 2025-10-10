@@ -2,3 +2,66 @@
 title: "SFTP Only Chroot"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+Configure SFTP only + Chroot.  
+Some users who are applied this setting can access only with SFTP and also applied chroot directory.
+
+\[1\]
+
+For example, Set \[/home\] as the Chroot directory.
+
+\# create a group for SFTP only
+
+root@dlp:~#
+
+[groupadd](https://www.server-world.info/en/note?p=command&q=groupadd) sftp_users
+
+\# apply to a user \[bookworm\] for SFTP only as an example
+
+root@dlp:~#
+
+[usermod](https://www.server-world.info/en/note?p=command&q=usermod) -aG sftp_users bookworm
+
+root@dlp:~#
+
+[vi](https://www.server-world.info/en/note?p=command&q=vi) /etc/ssh/sshd_config
+
+\# line 115 : comment out and add a line like below
+
+#
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+Subsystem sftp internal-sftp
+
+\# add to the end
+
+Match Group sftp_users
+X11Forwarding no
+AllowTcpForwarding no
+ChrootDirectory /home
+ForceCommand internal-sftp
+
+root@dlp:~#
+
+[systemctl](https://www.server-world.info/en/note?p=command&q=systemctl) restart ssh
+
+\[2\]
+
+Try to access with a user and verify the settings.
+
+bookworm@node01:~$
+
+ssh bookworm@dlp.srv.world
+
+bookworm@dlp.srv.world's password:
+This service allows sftp connections only.
+Connection to dlp.srv.world closed. \# denied as settings
+
+bookworm@node01:~$
+
+sftp bookworm@dlp.srv.world
+
+bookworm@dlp.srv.world's password:
+Connected to dlp.srv.world.
+sftp>

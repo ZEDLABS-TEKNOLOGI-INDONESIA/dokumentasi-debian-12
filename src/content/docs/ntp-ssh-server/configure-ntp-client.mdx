@@ -2,3 +2,52 @@
 title: "Configure NTP Client"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Configure NTP Client.
+
+NTP Client [systemd-timesyncd.service] is running by default on Ubuntu, so it's easy to set NTP Client.
+By the way, it's also possible to use NTPsec or Chrony as a NTP Client.
+If you use them, simply set only NTP server to sync time, do not set permission to receive time sync requests from other Hosts.
+
+<Steps>
+1. Configure [systemd-timesyncd.service].
+    ```markdown
+    root@client:~# systemctl status systemd-timesyncd
+
+    - systemd-timesyncd.service - Network Time Synchronization
+    Loaded: loaded (/lib/systemd/system/systemd-timesyncd.service; enabled; pr>)
+    Active: active (running) since Wed 2023-06-14 01:18:10 CDT; 19min ago
+    Docs: man:systemd-timesyncd.service(8)
+    Main PID: 418 (systemd-timesyn)
+    Status: "Contacted time server 217.178.99.126:123 (2.debian.pool.ntp.org)."
+    Tasks: 2 (limit: 4639)
+    Memory: 1.4M
+    CPU: 28ms
+    CGroup: /system.slice/systemd-timesyncd.service
+    .....
+    .....
+    root@client:~# vi /etc/systemd/timesyncd.conf
+
+    # add to the end : set NTP server for your timezone
+
+    NTP=dlp.srv.world
+    root@client:~# systemctl restart systemd-timesyncd
+    root@client:~# timedatectl timesync-status
+    Server: 10.0.0.30 (dlp.srv.world)
+    Poll interval: 1min 4s (min: 32s; max 34min 8s)
+    Leap: normal
+    Version: 4
+    Stratum: 2
+    Reference: 85F3EEA4
+    Precision: 1us (-24)
+    Root distance: 15.525ms (max: 5s)
+    Offset: +2.284ms
+    Delay: 425us
+    Jitter: 0
+    Packet count: 1
+    Frequency: +9.874ppm
+    ```
+
+</Steps>

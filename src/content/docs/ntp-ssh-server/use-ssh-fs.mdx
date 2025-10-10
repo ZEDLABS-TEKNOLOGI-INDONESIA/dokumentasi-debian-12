@@ -2,3 +2,53 @@
 title: "Use SSH-FS"
 description: "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop."
 ---
+
+It's possible to mount filesystem on another Host via SSH to use SSHFS.
+
+\[1\]
+
+Install fuse-sshfs.
+
+root@dlp:~#
+
+[apt](https://www.server-world.info/en/note?p=command&q=apt) -y install sshfs
+
+\[2\]
+
+It's possible to use by any user.  
+For example, \[debian\] user mount \[/home/debian/work\] on \[node01.srv.world\] to local \[~/sshmnt\].
+
+debian@dlp:~$
+
+[mkdir](https://www.server-world.info/en/note?p=command&q=mkdir) ~/sshmnt
+
+\# mount with SSHFS
+
+debian@dlp:~$
+
+sshfs node01.srv.world:/home/debian/work ~/sshmnt
+
+debian@node01.srv.world's password:
+
+\# password of the user
+
+debian@dlp:~$
+
+[df](https://www.server-world.info/en/note?p=command&q=df) -hT
+
+Filesystem Type Size Used Avail Use% Mounted on
+udev devtmpfs 1.9G 0 1.9G 0% /dev
+tmpfs tmpfs 392M 564K 391M 1% /run
+/dev/mapper/debian--vg-root ext4 28G 1.3G 26G 5% /
+tmpfs tmpfs 2.0G 0 2.0G 0% /dev/shm
+tmpfs tmpfs 5.0M 0 5.0M 0% /run/lock
+/dev/vda1 ext2 455M 58M 373M 14% /boot
+tmpfs tmpfs 392M 0 392M 0% /run/user/0
+node01.srv.world:/home/debian/work fuse.sshfs 28G 1.3G 26G 5% /home/debian/sshmnt
+\# just mounted
+
+\# for unmount, do like follows
+
+debian@dlp:~$
+
+fusermount -u ~/sshmnt
