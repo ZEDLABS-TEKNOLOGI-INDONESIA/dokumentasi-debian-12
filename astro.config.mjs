@@ -74,76 +74,76 @@ export default defineConfig({
             },
           ],
         },
-        // {
-        //   label: "NTP / SSH Server", // Tema Pembahasan
-        //   collapsed: true,
-        //   items: [
-        //     {
-        //       label: "NTP Server", // Kategori
-        //       collapsed: true,
-        //       items: [
-        //         {
-        //           label: "Configure NTP Server (NTPsec)",
-        //           slug: "ntp-ssh-server/configure-ntp-server-ntpsec",
-        //         },
-        //         {
-        //           label: "Configure NTP Server (Chrony)",
-        //           slug: "ntp-ssh-server/configure-ntp-server-chrony",
-        //         },
-        //         {
-        //           label: "Configure NTP Client",
-        //           slug: "ntp-ssh-server/configure-ntp-client",
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       label: "SSH Server", // Kategori
-        //       collapsed: true,
-        //       items: [
-        //         {
-        //           label: "Password Authentication",
-        //           slug: "ntp-ssh-server/password-authentication",
-        //         },
-        //         {
-        //           label: "SSH File Transfer (Debian)",
-        //           slug: "ntp-ssh-server/ssh-file-transfer-debian",
-        //         },
-        //         {
-        //           label: "SSH File Transfer (Windows)",
-        //           slug: "ntp-ssh-server/ssh-file-transfer-windows",
-        //         },
-        //         {
-        //           label: "SSH Keys Pair Authentication",
-        //           slug: "ntp-ssh-server/ssh-keys-pair-authentication",
-        //         },
-        //         {
-        //           label: "SFTP Only + Chroot",
-        //           slug: "ntp-ssh-server/sftp-only-chroot",
-        //         },
-        //         {
-        //           label: "Use SSH-Agent",
-        //           slug: "ntp-ssh-server/use-ssh-agent",
-        //         },
-        //         {
-        //           label: "Use SSH-Pass",
-        //           slug: "ntp-ssh-server/use-ssh-pass",
-        //         },
-        //         {
-        //           label: "Use SSH-FS",
-        //           slug: "ntp-ssh-server/use-ssh-fs",
-        //         },
-        //         {
-        //           label: "SSH Port Forwarding",
-        //           slug: "ntp-ssh-server/ssh-port-forwarding",
-        //         },
-        //         {
-        //           label: "Use Parallel SSH",
-        //           slug: "ntp-ssh-server/use-parallel-ssh",
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // },
+        {
+          label: "NTP / SSH Server", // Tema Pembahasan
+          collapsed: true,
+          items: [
+            {
+              label: "NTP Server", // Kategori
+              collapsed: true,
+              items: [
+                {
+                  label: "Configure NTP Server (NTPsec)",
+                  slug: "ntp-ssh-server/configure-ntp-server-ntpsec",
+                },
+                {
+                  label: "Configure NTP Server (Chrony)",
+                  slug: "ntp-ssh-server/configure-ntp-server-chrony",
+                },
+                {
+                  label: "Configure NTP Client",
+                  slug: "ntp-ssh-server/configure-ntp-client",
+                },
+              ],
+            },
+            {
+              label: "SSH Server", // Kategori
+              collapsed: true,
+              items: [
+                {
+                  label: "Password Authentication",
+                  slug: "ntp-ssh-server/password-authentication",
+                },
+                {
+                  label: "SSH File Transfer (Debian)",
+                  slug: "ntp-ssh-server/ssh-file-transfer-debian",
+                },
+                {
+                  label: "SSH File Transfer (Windows)",
+                  slug: "ntp-ssh-server/ssh-file-transfer-windows",
+                },
+                {
+                  label: "SSH Keys Pair Authentication",
+                  slug: "ntp-ssh-server/ssh-keys-pair-authentication",
+                },
+                {
+                  label: "SFTP Only + Chroot",
+                  slug: "ntp-ssh-server/sftp-only-chroot",
+                },
+                {
+                  label: "Use SSH-Agent",
+                  slug: "ntp-ssh-server/use-ssh-agent",
+                },
+                {
+                  label: "Use SSH-Pass",
+                  slug: "ntp-ssh-server/use-ssh-pass",
+                },
+                {
+                  label: "Use SSH-FS",
+                  slug: "ntp-ssh-server/use-ssh-fs",
+                },
+                {
+                  label: "SSH Port Forwarding",
+                  slug: "ntp-ssh-server/ssh-port-forwarding",
+                },
+                {
+                  label: "Use Parallel SSH",
+                  slug: "ntp-ssh-server/use-parallel-ssh",
+                },
+              ],
+            },
+          ],
+        },
         // {
         //   label: "Instalasi",
         //   autogenerate: { directory: "install-debian" },
