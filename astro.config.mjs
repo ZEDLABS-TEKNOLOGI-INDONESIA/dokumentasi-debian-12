@@ -2,11 +2,13 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
+import starlightThemeRapide from "starlight-theme-rapide";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     starlight({
+      plugins: [starlightThemeRapide()],
       title: "Debian 12",
       social: [
         {
