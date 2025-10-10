@@ -1,12 +1,11 @@
-// @ts-check
 import AstroPWA from "@vite-pwa/astro";
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import starlightThemeRapide from "starlight-theme-rapide";
 
-// https://astro.build/config
 export default defineConfig({
+  site: "http://localhost:4321",
   integrations: [
     AstroPWA({
       mode: "development",
@@ -15,9 +14,25 @@ export default defineConfig({
       includeAssets: ["favicon.svg"],
       registerType: "autoUpdate",
       manifest: {
-        name: "Astro PWA",
-        short_name: "Astro PWA",
+        name: "Debian 12",
+        short_name:
+          "Panduan lengkap instalasi, konfigurasi, dan pengelolaan Debian 12 untuk server dan desktop.",
         theme_color: "#ffffff",
+        icons: [
+          {
+            src: "public/icons/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "public/icons/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
       },
       pwaAssets: {
         config: true,
@@ -189,7 +204,6 @@ export default defineConfig({
     },
     server: {
       fs: {
-        // Allow serving files from hoisted root node_modules
         allow: ["../.."],
       },
     },
