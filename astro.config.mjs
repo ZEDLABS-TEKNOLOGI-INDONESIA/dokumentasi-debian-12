@@ -3,10 +3,31 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import starlightThemeRapide from "starlight-theme-rapide";
+import AstroPWA from "@vite-pwa/astro";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    // AstroPWA({
+    //   workbox: {
+    //     navigateFallback: "/404",
+    //     runtimeCaching: [
+    //       {
+    //         handler: "NetworkOnly",
+    //         urlPattern: /\/api\/.*\/*.json/,
+    //         method: "POST",
+    //         options: {
+    //           backgroundSync: {
+    //             name: "myQueueName",
+    //             options: {
+    //               maxRetentionTime: 24 * 60,
+    //             },
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // }),
     starlight({
       plugins: [starlightThemeRapide()],
       title: "Debian 12",
