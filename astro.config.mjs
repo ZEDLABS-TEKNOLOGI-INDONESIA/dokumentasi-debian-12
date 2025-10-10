@@ -19,11 +19,11 @@ export default defineConfig({
       ],
       sidebar: [
         {
-          label: "Install Debian", // Tema Pembahasan
+          label: "💠 Install Debian", // Tema Pembahasan
           // collapsed: true,
           items: [
             {
-              label: "Install", // Kategori
+              label: "💠 Install", // Kategori
               // collapsed: true,
               items: [
                 {
@@ -37,7 +37,7 @@ export default defineConfig({
               ],
             },
             {
-              label: "Initial Settings", // Kategori
+              label: "⚙️ Initial Settings", // Kategori
               // collapsed: true,
               items: [
                 {
@@ -77,7 +77,7 @@ export default defineConfig({
           ],
         },
         {
-          label: "NTP / SSH Server", // Tema Pembahasan
+          label: "🎛️ NTP / SSH Server", // Tema Pembahasan
           // collapsed: true,
           items: [
             {
