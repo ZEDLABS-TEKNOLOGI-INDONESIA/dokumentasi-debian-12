@@ -1,33 +1,39 @@
 // @ts-check
+import AstroPWA from "@vite-pwa/astro";
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import starlightThemeRapide from "starlight-theme-rapide";
-import AstroPWA from "@vite-pwa/astro";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    // AstroPWA({
-    //   workbox: {
-    //     navigateFallback: "/404",
-    //     runtimeCaching: [
-    //       {
-    //         handler: "NetworkOnly",
-    //         urlPattern: /\/api\/.*\/*.json/,
-    //         method: "POST",
-    //         options: {
-    //           backgroundSync: {
-    //             name: "myQueueName",
-    //             options: {
-    //               maxRetentionTime: 24 * 60,
-    //             },
-    //           },
-    //         },
-    //       },
-    //     ],
-    //   },
-    // }),
+    AstroPWA({
+      mode: "development",
+      base: "/",
+      scope: "/",
+      includeAssets: ["favicon.svg"],
+      registerType: "autoUpdate",
+      manifest: {
+        name: "Astro PWA",
+        short_name: "Astro PWA",
+        theme_color: "#ffffff",
+      },
+      pwaAssets: {
+        config: true,
+      },
+      workbox: {
+        navigateFallback: "/",
+        globPatterns: ["**/*.{css,js,html,svg,png,ico,txt}"],
+      },
+      devOptions: {
+        enabled: true,
+        navigateFallbackAllowlist: [/^\/$/],
+      },
+      experimental: {
+        directoryAndTrailingSlashHandler: true,
+      },
+    }),
     starlight({
       plugins: [starlightThemeRapide()],
       title: "Debian 12",
@@ -41,11 +47,11 @@ export default defineConfig({
       sidebar: [
         {
           label: "💠 Install Debian", // Tema Pembahasan
-          // collapsed: true,
+          collapsed: false,
           items: [
             {
               label: "💠 Install", // Kategori
-              // collapsed: true,
+              collapsed: false,
               items: [
                 {
                   label: "Get Debian 12",
@@ -59,7 +65,7 @@ export default defineConfig({
             },
             {
               label: "⚙️ Initial Settings", // Kategori
-              // collapsed: true,
+              collapsed: false,
               items: [
                 {
                   label: "Add User Accounts",
@@ -99,11 +105,11 @@ export default defineConfig({
         },
         {
           label: "🎛️ NTP / SSH Server", // Tema Pembahasan
-          // collapsed: true,
+          collapsed: false,
           items: [
             {
               label: "NTP Server", // Kategori
-              // collapsed: true,
+              collapsed: false,
               items: [
                 {
                   label: "Configure NTP Server (NTPsec)",
@@ -121,7 +127,7 @@ export default defineConfig({
             },
             {
               label: "SSH Server", // Kategori
-              // collapsed: true,
+              collapsed: false,
               items: [
                 {
                   label: "Password Authentication",
@@ -177,5 +183,15 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    logLevel: "info",
+    define: {
+      __DATE__: `'${new Date().toISOString()}'`,
+    },
+    server: {
+      fs: {
+        // Allow serving files from hoisted root node_modules
+        allow: ["../.."],
+      },
+    },
   },
 });
